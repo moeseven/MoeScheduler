@@ -1,3 +1,4 @@
+import GUI.ProgramFrame;
 
 public class Main {
 
@@ -9,6 +10,7 @@ public class Main {
 		time = ToolFunctions.convertToSeconds(date[0], date[1], date[2], date[3], date[4]);
 		date = ToolFunctions.convertFromSeconds(time);
 		System.out.println("transfomed: "+ToolFunctions.getPrettyDateString(date));
+		new ProgramFrame();
 	}
 
 }
