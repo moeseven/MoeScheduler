@@ -63,6 +63,7 @@ public class AddEntryPanel extends JPanel{
 			//
 			createEntry= new JPanel();
 			create= new JButton("new entry");
+			create.addMouseListener(new MyMouseListener());
 			createEntry.add(create);
 			add(createEntry, BorderLayout.EAST);
 		}
@@ -70,9 +71,11 @@ public class AddEntryPanel extends JPanel{
 			public void mousePressed(MouseEvent e){
 				if(e.getButton()==1){
 					pf.scheduler.addNewTask(new TaskObject(pf.scheduler, descriptionField.getText(), recursion.getText(), year.getText(), month.getText(), day.getText(), hour.getText(), minute.getText()));
+					pf.renew();
+					pf.revalidate();
+					pf.repaint();
 				}else{
 					if (e.getButton()==3){
-						//new CardView(card);
 					}
 				}
 			} 

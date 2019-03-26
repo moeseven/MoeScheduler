@@ -5,13 +5,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.LinkedList;
 
 
-public class Scheduler {
+public class Scheduler implements Serializable{
 private LinkedList<TaskObject> taskList;
 	public Scheduler() {
-		this.loadEntries();
+		taskList=new LinkedList<TaskObject>();
+		taskList.add(new TaskObject(this, "1 Kniebeuge", 1, 3000, 4, 1, 8, 22));
 	}
 	public void update() {
 		//TODO
@@ -28,23 +30,26 @@ private LinkedList<TaskObject> taskList;
 		}
 	}
 	public void sortInNewTask(TaskObject task) {
-		for (int i = 0; i < taskList.size(); i++) {
+		int index=taskList.size(); boolean positionReached=false;
+		for (int i = 0; i < taskList.size()&&!positionReached; i++) {
 			if (task.getTime()< taskList.get(i).getTime()) {
-				taskList.add(i,task);
+				index=i; positionReached=true;				
 			}
 		}
-		
+		taskList.add(index,task);
+		System.out.println("actually inserted");
 	}
 	public LinkedList<TaskObject> getTodaysTasks() {
 		//TODO
 		return taskList;
 		
 	}
-	public void saveEntries() {
+	public void saveEntries(Scheduler scheduler) {
 		ObjectOutputStream oos=null;
 		try {
 			oos = new ObjectOutputStream(new FileOutputStream("./src/resources/scheduler.dat"));
-			oos.writeObject(taskList);
+			oos.writeObject(scheduler);
+			System.out.println("tasks saved");
 		} catch (FileNotFoundException e1) {			
 			e1.printStackTrace();
 		} catch (IOException e1) {
@@ -58,12 +63,14 @@ private LinkedList<TaskObject> taskList;
 			}
 		}
 	}
-	public void loadEntries() {
+	public Scheduler loadEntries() {
 		//load from file;
+		Scheduler s=null;
 		ObjectInputStream ois=null;
 		try {
 			ois=new ObjectInputStream(new FileInputStream("./src/resources/scheduler.dat"));
-			taskList=(LinkedList<TaskObject>)ois.readObject();
+			s=(Scheduler)ois.readObject();
+			System.out.println("tasks loaded");
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -82,6 +89,7 @@ private LinkedList<TaskObject> taskList;
 			}
 			
 		}
+		return s;
 	}
 	
 	// getters and setters

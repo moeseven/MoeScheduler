@@ -2,34 +2,44 @@ package GUI;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import program.Scheduler;
+import program.ToolFunctions;
 
 
 public class ProgramFrame extends JFrame{
 	JFrame frame;
 	Scheduler scheduler;
+	JPanel mainPanel;
+	Integer[] date;
 	public ProgramFrame(Scheduler scheduler) {
 		frame =this;
 		this.scheduler= scheduler;
+		mainPanel= new JPanel();
+		setVisible(true);
 		initialize();
 	}
+	public void renew() {
+		this.remove(mainPanel);
+		mainPanel= new SchedulerPanel(this);
+		add(mainPanel);
+		revalidate();
+	}
 	private void initialize() {
-		setVisible(true);
-		setBounds(100, 100, 450, 300);
+		date =ToolFunctions.getCurrentDate();
+		this.setTitle(date[0]+"."+date[1]+"."+date[2]);
+		mainPanel= new SchedulerPanel(this);		
+		setBounds(230, 100, 650, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		add(new SchedulerPanel(this));
+		add(mainPanel);
 		revalidate();
 		addWindowListener(new java.awt.event.WindowAdapter() {
 	    @Override
 	    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-	    	scheduler.saveEntries();
-	        if (JOptionPane.showConfirmDialog(frame, 
-	            "Are you sure you want to close this window?", "Close Window?", 
-	            JOptionPane.YES_NO_OPTION,
-	            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-	            System.exit(0);
-	        }
+	    	System.out.println(scheduler.getTaskList().size());
+	    	scheduler.saveEntries(scheduler);
+	    	System.exit(0);
 	    }
 	});
 	}

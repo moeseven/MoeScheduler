@@ -14,7 +14,12 @@ public class Main {
 		date = ToolFunctions.convertFromSeconds(time);
 		System.out.println("transfomed: "+ToolFunctions.getPrettyDateString(date));
 		System.out.println(new File(".").getAbsoluteFile());
-		new ProgramFrame(new Scheduler());
+		Scheduler s = new Scheduler();
+		//load data
+		s=s.loadEntries();
+		new ProgramFrame(s);
+		System.out.println(s.getTaskList().size());
+		
 	}
 
 }

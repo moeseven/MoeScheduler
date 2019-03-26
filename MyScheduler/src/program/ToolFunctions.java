@@ -147,4 +147,20 @@ public class ToolFunctions {
 	public static int aDaysSeconds() {
 		return 24*60*60;
 	}
+	public static boolean isThisToday(long time_seconds) {
+		long currentTime=System.currentTimeMillis()/1000;
+		if (time_seconds<currentTime+(24*60*60)-currentTime%(24*60*60)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	public static boolean isThisTomorrow(long time_seconds) {
+		long currentTime=System.currentTimeMillis()/1000;
+		if (time_seconds<currentTime+(2*24*60*60)-currentTime%(24*60*60)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 }

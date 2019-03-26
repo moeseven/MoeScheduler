@@ -1,6 +1,8 @@
 package program;
 
-public class TaskObject {
+import java.io.Serializable;
+
+public class TaskObject implements Serializable{
 private int recursion;
 private boolean appointment;
 private int day;

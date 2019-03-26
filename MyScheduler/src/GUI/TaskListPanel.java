@@ -7,46 +7,97 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import program.TaskObject;
+import program.ToolFunctions;
 
 public class TaskListPanel extends JPanel{
 	private JScrollPane sp;
 	private JPanel gridEntries;
-	public TaskListPanel() {	
+	private ProgramFrame pf;
+	public TaskListPanel(ProgramFrame pf) {	
+		this.pf=pf;
 		setLayout(new BorderLayout());
-		sp= new JScrollPane();
-		sp.setVisible(true);
 		gridEntries= new JPanel();
 		gridEntries.setLayout(new GridLayout(0,1));
-		for (int i = 0; i < 3; i++) {
-			gridEntries.add(new GridEntry());
+		gridEntries.setVisible(true);
+		for (int i = 0; i < pf.scheduler.getTaskList().size(); i++) {
+			gridEntries.add(new GridEntry(pf.scheduler.getTaskList().get(i)));
 		}
-		sp.add(gridEntries);
-		setSize(new Dimension(300, 200));
+		sp= new JScrollPane(gridEntries);
+		sp.setVisible(true);
+		
+		//setSize(new Dimension(300, 200));
 		add(sp, BorderLayout.CENTER);
 		setVisible(true);
 		revalidate();
 		repaint();
 	}
 	private class GridEntry extends JPanel{
+		private JPanel buttons;
+		private JPanel description;
 		private JButton buttonPush;
 		private JButton buttonCancle;
 		private JButton buttonFullfill;
-		private JTextField description;
-		private GridEntry() {
-			
-			//setSize(new Dimension(300, 50));
-			setLayout(new GridLayout(4, 1));
-			description= new JTextField();
-			description.setEditable(false);
+		private JTextArea text;
+		private JTextArea timeStamp;
+		private TaskObject to;
+		private GridEntry(TaskObject to) {
+			this.to=to;
+			setPreferredSize(new Dimension(300, 50));
+			//setSize(new );
+			setLayout(new GridLayout(0, 2));
+			text= new JTextArea(to.getDescription()+"");
+			text.setEditable(false);
+			timeStamp= new JTextArea(generateTimeStamp(to));
+			timeStamp.setPreferredSize(new Dimension(80, 50));
+			timeStamp.setEditable(false);
+
+			description= new JPanel();
+			description.setLayout(new BorderLayout());
+			description.add(text, BorderLayout.CENTER);
+			description.add(timeStamp, BorderLayout.WEST);
 			buttonPush= new JButton("Push");
 			buttonCancle= new JButton("Cancle");
 			buttonFullfill= new JButton("Fullfill");
 			add(description);
-			add(buttonFullfill);
-			add(buttonPush);
-			add(buttonCancle);
+			buttons= new JPanel();
+			buttons.setLayout(new GridLayout(1, 3));
+			buttons.add(buttonFullfill);
+			buttons.add(buttonPush);
+			buttons.add(buttonCancle);
+			add(buttons);
 			setVisible(true);
+		}
+		private String generateTimeStamp(TaskObject task) {//TODO make this pretty
+			String retVal="";
+			Integer[] date = ToolFunctions.convertFromSeconds(task.getTime()); 
+			String prettyDate = ToolFunctions.getPrettyDateString(date);
+			if (task.getTime()<System.currentTimeMillis()/1000) {
+				retVal+= "in the past!"+"\n";
+			}else {
+					if (ToolFunctions.isThisToday(task.getTime())) {
+					retVal+="Today"+"\n";
+				}else {
+					if (ToolFunctions.isThisTomorrow(task.getTime())) {
+						retVal+="Tomorrow"+"\n";
+					}else {
+						retVal+=date[2]+". ";
+					}
+					
+				}
+			}
+			
+			retVal+=" "+date[3]+":";
+			if (date[4]<10) {
+				retVal+="0"+date[4];
+			}else {
+				retVal+=date[4];
+			}	
+			retVal+=" Uhr";
+			return retVal;
 		}
 	}
 }

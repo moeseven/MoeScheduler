@@ -14,7 +14,7 @@ public class SchedulerPanel extends JPanel{
 	public SchedulerPanel(ProgramFrame pf) {
 		setLayout(new BorderLayout());
 		jpNorth=new AddEntryPanel(pf);
-		jpCenter= new TaskListPanel();
+		jpCenter= new TaskListPanel(pf);
 		add(jpNorth, BorderLayout.NORTH);
 		add(jpCenter, BorderLayout.CENTER);
 	}
