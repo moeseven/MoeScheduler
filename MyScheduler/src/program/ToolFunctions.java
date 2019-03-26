@@ -1,3 +1,4 @@
+package program;
 
 public class ToolFunctions {
 	public static long convertToSeconds(int year, int month, int day, int hour, int minute) {
@@ -142,5 +143,8 @@ public class ToolFunctions {
 		secondsPerMonth[11]=30*24*60*60;//november
 		secondsPerMonth[12]=31*24*60*60;//december
 		return secondsPerMonth;
+	}
+	public static int aDaysSeconds() {
+		return 24*60*60;
 	}
 }
