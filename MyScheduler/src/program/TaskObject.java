@@ -22,25 +22,6 @@ private Scheduler scheduler;
 		time=ToolFunctions.convertToSeconds(year, month, day, hour, minute);
 	}
 
-	public void push() {//1 day costs dicipline points TODO
-		scheduler.removeTask(this);
-		time+=1*ToolFunctions.aDaysSeconds();
-		scheduler.addNewTask(this);	
-	}
-	public void cancle() {//punish this TODO
-		delete();
-	}
-	public void fullfill() {//give some dicipline points here TODO
-		if (scheduler.getTaskList().contains(this)) {
-			if (recursion>0) {				
-				scheduler.removeTask(this);
-				time+=recursion*ToolFunctions.aDaysSeconds();
-				scheduler.addNewTask(this);				
-			}else {
-				scheduler.removeTask(this);
-			}
-		}
-	}
 	public void delete() {
 		if (scheduler.getTaskList().contains(this)) {
 			scheduler.getTaskList().remove(this);
@@ -60,4 +41,11 @@ private Scheduler scheduler;
 	public void setTime(long time) {
 		this.time = time;
 	}
+	public int getRecursion() {
+		return recursion;
+	}
+	public void setRecursion(int recursion) {
+		this.recursion = recursion;
+	}
+	
 }

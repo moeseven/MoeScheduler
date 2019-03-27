@@ -155,6 +155,15 @@ public class ToolFunctions {
 			return false;
 		}
 	}
+	public static boolean thisYear(long time_seconds) {
+		// TODO slightly inaccurate because of leap years
+		long currentTime=System.currentTimeMillis()/1000;
+		if (time_seconds<currentTime+(365*24*60*60)-currentTime%(365*24*60*60)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	public static boolean isThisTomorrow(long time_seconds) {
 		long currentTime=System.currentTimeMillis()/1000;
 		if (time_seconds<currentTime+(2*24*60*60)-currentTime%(24*60*60)) {

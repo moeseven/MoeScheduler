@@ -37,7 +37,7 @@ public class ProgramFrame extends JFrame{
 		addWindowListener(new java.awt.event.WindowAdapter() {
 	    @Override
 	    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-	    	System.out.println(scheduler.getTaskList().size());
+	    	scheduler.setLastUpdate(System.currentTimeMillis()/1000);
 	    	scheduler.saveEntries(scheduler);
 	    	System.exit(0);
 	    }

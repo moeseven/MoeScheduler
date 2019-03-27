@@ -17,6 +17,7 @@ public class Main {
 		Scheduler s = new Scheduler();
 		//load data
 		s=s.loadEntries();
+		s.update();
 		new ProgramFrame(s);
 		System.out.println(s.getTaskList().size());
 		

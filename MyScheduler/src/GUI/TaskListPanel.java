@@ -3,6 +3,8 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -52,7 +54,7 @@ public class TaskListPanel extends JPanel{
 			text= new JTextArea(to.getDescription()+"");
 			text.setEditable(false);
 			timeStamp= new JTextArea(generateTimeStamp(to));
-			timeStamp.setPreferredSize(new Dimension(80, 50));
+			timeStamp.setPreferredSize(new Dimension(100, 50));
 			timeStamp.setEditable(false);
 
 			description= new JPanel();
@@ -60,8 +62,11 @@ public class TaskListPanel extends JPanel{
 			description.add(text, BorderLayout.CENTER);
 			description.add(timeStamp, BorderLayout.WEST);
 			buttonPush= new JButton("Push");
+			buttonPush.addMouseListener(new ButtonPush());
 			buttonCancle= new JButton("Cancle");
-			buttonFullfill= new JButton("Fullfill");
+			buttonCancle.addMouseListener(new ButtonCancle());
+			buttonFullfill= new JButton("Done");
+			buttonFullfill.addMouseListener(new ButtonDone());
 			add(description);
 			buttons= new JPanel();
 			buttons.setLayout(new GridLayout(1, 3));
@@ -71,6 +76,46 @@ public class TaskListPanel extends JPanel{
 			add(buttons);
 			setVisible(true);
 		}
+		private class ButtonDone extends MouseAdapter{
+			public void mousePressed(MouseEvent e){
+				if(e.getButton()==1){
+					pf.scheduler.fullFill(to);
+					pf.renew();
+					pf.revalidate();
+					pf.repaint();
+				}else{
+					if (e.getButton()==3){
+					}
+				}
+			} 
+		}
+		private class ButtonPush extends MouseAdapter{
+			public void mousePressed(MouseEvent e){
+				if(e.getButton()==1){
+					pf.scheduler.push(to);
+					pf.renew();
+					pf.revalidate();
+					pf.repaint();
+				}else{
+					if (e.getButton()==3){
+					}
+				}
+			} 
+		}
+		private class ButtonCancle extends MouseAdapter{
+			public void mousePressed(MouseEvent e){
+				if(e.getButton()==1){
+					pf.scheduler.cancle(to);
+					pf.renew();
+					pf.revalidate();
+					pf.repaint();
+				}else{
+					if (e.getButton()==3){
+					}
+				}
+			} 
+		}
+
 		private String generateTimeStamp(TaskObject task) {//TODO make this pretty
 			String retVal="";
 			Integer[] date = ToolFunctions.convertFromSeconds(task.getTime()); 
@@ -84,19 +129,22 @@ public class TaskListPanel extends JPanel{
 					if (ToolFunctions.isThisTomorrow(task.getTime())) {
 						retVal+="Tomorrow"+"\n";
 					}else {
-						retVal+=date[2]+". ";
-					}
-					
+						if (!ToolFunctions.thisYear(task.getTime())) {
+							retVal+=date[0]+".";
+						}
+						retVal+=date[1]+"."+date[2]+". ";
+					}					
 				}
 			}
-			
-			retVal+=" "+date[3]+":";
-			if (date[4]<10) {
-				retVal+="0"+date[4];
-			}else {
-				retVal+=date[4];
-			}	
-			retVal+=" Uhr";
+			if (ToolFunctions.thisYear(task.getTime())) {
+				retVal+=" "+date[3]+":";
+				if (date[4]<10) {
+					retVal+="0"+date[4];
+				}else {
+					retVal+=date[4];
+				}	
+				retVal+=" Uhr";
+			}			
 			return retVal;
 		}
 	}

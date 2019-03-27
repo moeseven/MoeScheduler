@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
 import program.TaskObject;
+import program.ToolFunctions;
 
 public class AddEntryPanel extends JPanel{
 	private JPanel jpWest;
@@ -31,6 +32,12 @@ public class AddEntryPanel extends JPanel{
 		JTextField hour;
 		JTextField minute;
 		JTextField recursion;
+		JTextField yearName;
+		JTextField monthName;
+		JTextField dayName;
+		JTextField hourName;
+		JTextField minuteName;
+		JTextField recursionName;
 		JPanel date;
 		JPanel description;
 		JPanel createEntry;
@@ -39,14 +46,33 @@ public class AddEntryPanel extends JPanel{
 			this.setVisible(true);
 			setLayout(new BorderLayout());
 			//date panel
+			Integer[] d = ToolFunctions.getCurrentDate();
 			date= new JPanel();
-			year=new JTextField();
-			month= new JTextField();
-			day= new JTextField();
-			hour= new JTextField();
-			minute= new JTextField();
+			year=new JTextField(""+d[0]);
+			month= new JTextField(""+d[1]);
+			day= new JTextField(""+d[2]);
+			hour= new JTextField(""+d[3]);
+			minute= new JTextField(""+d[4]);
 			recursion= new JTextField("0");
-			date.setLayout(new GridLayout(1, 6));
+			yearName=new JTextField("year");
+			yearName.setEditable(false);
+			monthName= new JTextField("month");
+			monthName.setEditable(false);
+			dayName= new JTextField("day");
+			dayName.setEditable(false);
+			hourName= new JTextField("hour");
+			hourName.setEditable(false);
+			minuteName= new JTextField("minute");
+			minuteName.setEditable(false);
+			recursionName= new JTextField("cycle time");
+			recursionName.setEditable(false);
+			date.setLayout(new GridLayout(2, 6));
+			date.add(yearName);
+			date.add(monthName);
+			date.add(dayName);
+			date.add(hourName);
+			date.add(minuteName);
+			date.add(recursionName);
 			date.add(year);
 			date.add(month);
 			date.add(day);
