@@ -130,9 +130,12 @@ public class TaskListPanel extends JPanel{
 						retVal+="Tomorrow"+"\n";
 					}else {
 						if (!ToolFunctions.thisYear(task.getTime())) {
+							
 							retVal+=date[0]+".";
 						}
-						retVal+=date[1]+"."+date[2]+". ";
+						//get day of week
+						String dayOfTheWeek=ToolFunctions.getDayOfWeek(task.getTime());
+						retVal+=dayOfTheWeek+"\n"+date[1]+"."+date[2]+". ";
 					}					
 				}
 			}

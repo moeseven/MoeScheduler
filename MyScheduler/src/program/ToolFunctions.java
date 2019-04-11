@@ -90,15 +90,14 @@ public class ToolFunctions {
 		}
 		time_dayCheck=time_monthCheck + secondsPerMonth[i];
 		//summer time/ winter time
-		if (date[1]<4||date[1]>10) {
+		if (date[1]>=4||date[1]<=10) {
 			time_dayCheck+=60*60;
 		}
 		//day calculation		
 		date[2]=(int) (time_dayCheck/(24*60*60))+1;
 		time_hourCheck=time_dayCheck%(24*60*60);
 		//hour calculation
-		date[3]= (int) (time_hourCheck/(60*60));
-	
+		date[3]= (int) (time_hourCheck/(60*60))+1;	
 		time_minuteCheck= time_hourCheck%(60*60);
 		//minute calculation
 		date[4]= (int) (time_minuteCheck/60);
@@ -171,5 +170,36 @@ public class ToolFunctions {
 		}else {
 			return false;
 		}
+	}
+	public static String getDayOfWeek(long time_seconds) {
+		String weekDay="Monday";
+		int time_days= (int) (time_seconds/(60*60*24));
+		int day=(int) ((time_days+3)%7);
+		switch (day) {
+		case 0:
+			weekDay="Monday";
+			break;
+		case 1:
+			weekDay="Tuesday";
+			break;
+		case 2:
+			weekDay="Wednesday";
+			break;
+		case 3:
+			weekDay="Thursday";
+			break;
+		case 4:
+			weekDay="Friday";
+			break;
+		case 5:
+			weekDay="Saturday";
+			break;
+		case 6:
+			weekDay="Sunday";
+			break;
+		default:
+			break;
+		}
+		return weekDay;
 	}
 }
