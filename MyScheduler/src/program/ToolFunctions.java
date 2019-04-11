@@ -37,11 +37,11 @@ public class ToolFunctions {
 		//days
 		totalTime+=(day-1)*24*60*60;
 		//hours
-		totalTime+=hour*60*60;
+		totalTime+=(hour-1)*60*60;
 		//minutes
 		totalTime+=minute*60;
 		//summer time/ winter time
-		if (month<4||month>10) {
+		if (month>=4&&month<=10) {
 			totalTime-=60*60;
 		}
 		return totalTime;
@@ -90,7 +90,7 @@ public class ToolFunctions {
 		}
 		time_dayCheck=time_monthCheck + secondsPerMonth[i];
 		//summer time/ winter time
-		if (date[1]>=4||date[1]<=10) {
+		if (date[1]>=4&&date[1]<=10) {
 			time_dayCheck+=60*60;
 		}
 		//day calculation		
