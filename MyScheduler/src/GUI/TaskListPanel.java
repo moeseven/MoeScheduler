@@ -49,7 +49,7 @@ public class TaskListPanel extends JPanel{
 		private TaskObject to;
 		private GridEntry(TaskObject to) {
 			this.to=to;
-			setPreferredSize(new Dimension(300, 50));
+			setPreferredSize(new Dimension(300, 60));
 			//setSize(new );
 			setLayout(new GridLayout(0, 2));
 			text= new JTextArea(to.getDescription()+"");
@@ -147,19 +147,20 @@ public class TaskListPanel extends JPanel{
 			if (task.getTime()<System.currentTimeMillis()/1000) {
 				retVal+= "in the past!"+"\n";
 			}else {
-					if (ToolFunctions.isThisToday(task.getTime())) {
+				if (ToolFunctions.isThisToday(task.getTime())) {
 					retVal+="Today"+"\n";
 				}else {
 					if (ToolFunctions.isThisTomorrow(task.getTime())) {
 						retVal+="Tomorrow"+"\n";
-					}else {
-						if (!ToolFunctions.thisYear(task.getTime())) {
-							retVal+=date[0]+".";
-						}
-						retVal+=date[1]+"."+date[2]+". ";
-					}					
-				}
+					}
+			}}
+			if (!ToolFunctions.thisYear(task.getTime())) {							
+				retVal+=date[0]+".";
 			}
+				//get day of week
+				String dayOfTheWeek=ToolFunctions.getDayOfWeek(task.getTime());
+				retVal+=dayOfTheWeek+"\n"+date[1]+"."+date[2]+". ";				
+			
 			if (ToolFunctions.thisYear(task.getTime())) {
 				retVal+=" "+date[3]+":";
 				if (date[4]<10) {
