@@ -14,7 +14,7 @@ import program.TaskObject;
 import program.ToolFunctions;
 
 public class AddEntryPanel extends JPanel{
-	private JPanel jpWest;
+	private JpWest jpWest;
 	private JPanel jpEast;
 	private ProgramFrame pf;
 	public AddEntryPanel(ProgramFrame pf) {
@@ -23,6 +23,15 @@ public class AddEntryPanel extends JPanel{
 		jpWest= new JpWest();
 		setVisible(true);
 		add(jpWest, BorderLayout.NORTH);
+	}
+	public void setDate(Integer[] d) {
+		jpWest.setDate(d);
+	}
+	public void setDescription(String s) {
+		jpWest.setDescription(s);
+	}
+	public void setRecursion(int r) {
+		jpWest.setRecursion(r);
 	}
 	private class JpWest extends JPanel{
 		JTextPane descriptionField;
@@ -92,6 +101,19 @@ public class AddEntryPanel extends JPanel{
 			create.addMouseListener(new MyMouseListener());
 			createEntry.add(create);
 			add(createEntry, BorderLayout.EAST);
+		}
+		public void setDate(Integer[] d) {
+			year.setText(""+d[0]);
+			month.setText(""+d[1]);
+			day.setText(""+d[2]);
+			hour.setText(""+d[3]);
+			minute.setText(""+d[4]);
+		}
+		public void setDescription(String s) {
+			descriptionField.setText(s);
+		}
+		public void setRecursion(int r) {
+			recursion.setText(r+"");
 		}
 		private class MyMouseListener extends MouseAdapter{
 			public void mousePressed(MouseEvent e){

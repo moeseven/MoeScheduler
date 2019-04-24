@@ -11,12 +11,11 @@ import program.ToolFunctions;
 public class ProgramFrame extends JFrame{
 	JFrame frame;
 	Scheduler scheduler;
-	JPanel mainPanel;
+	SchedulerPanel mainPanel;
 	Integer[] date;
 	public ProgramFrame(Scheduler scheduler) {
 		frame =this;
 		this.scheduler= scheduler;
-		mainPanel= new JPanel();
 		setVisible(true);
 		initialize();
 	}

@@ -106,6 +106,9 @@ private long lastUpdate;
 		}
 		return s;
 	}
+//	public void edit(TaskObject task) {
+//		
+//	}
 	public void push(TaskObject task) {
 		normalPushPunish();
 		removeTask(task);

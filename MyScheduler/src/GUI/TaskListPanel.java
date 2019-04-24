@@ -43,6 +43,7 @@ public class TaskListPanel extends JPanel{
 		private JButton buttonPush;
 		private JButton buttonCancle;
 		private JButton buttonFullfill;
+		private JButton buttonEdit;
 		private JTextArea text;
 		private JTextArea timeStamp;
 		private TaskObject to;
@@ -61,6 +62,8 @@ public class TaskListPanel extends JPanel{
 			description.setLayout(new BorderLayout());
 			description.add(text, BorderLayout.CENTER);
 			description.add(timeStamp, BorderLayout.WEST);
+			buttonEdit= new JButton("Edit");
+			buttonEdit.addMouseListener(new ButtonEdit());
 			buttonPush= new JButton("Push");
 			buttonPush.addMouseListener(new ButtonPush());
 			buttonCancle= new JButton("Cancle");
@@ -69,12 +72,33 @@ public class TaskListPanel extends JPanel{
 			buttonFullfill.addMouseListener(new ButtonDone());
 			add(description);
 			buttons= new JPanel();
-			buttons.setLayout(new GridLayout(1, 3));
+			buttons.setLayout(new GridLayout(1, 4));
+			buttons.add(buttonEdit);
 			buttons.add(buttonFullfill);
 			buttons.add(buttonPush);
 			buttons.add(buttonCancle);
 			add(buttons);
 			setVisible(true);
+		}
+		private class ButtonEdit extends MouseAdapter{
+			public void mousePressed(MouseEvent e){
+				if(e.getButton()==1){
+					//put taskobject (to) data into text fields
+					to.delete();
+					Integer[] time= ToolFunctions.convertFromSeconds(to.getTime());
+					String description = to.getDescription();
+					int recursion = to.getRecursion();
+					pf.mainPanel.addEntryPanel.setDate(time);
+					pf.mainPanel.addEntryPanel.setRecursion(recursion);
+					pf.mainPanel.addEntryPanel.setDescription(description);
+					pf.revalidate();
+					pf.repaint();
+					
+				}else{
+					if (e.getButton()==3){
+					}
+				}
+			} 
 		}
 		private class ButtonDone extends MouseAdapter{
 			public void mousePressed(MouseEvent e){
