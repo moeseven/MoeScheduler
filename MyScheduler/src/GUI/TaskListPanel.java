@@ -49,7 +49,7 @@ public class TaskListPanel extends JPanel{
 		private TaskObject to;
 		private GridEntry(TaskObject to) {
 			this.to=to;
-			setPreferredSize(new Dimension(300, 60));
+			setPreferredSize(new Dimension(450, 60));
 			//setSize(new );
 			setLayout(new GridLayout(0, 2));
 			text= new JTextArea(to.getDescription()+"");

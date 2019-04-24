@@ -29,7 +29,7 @@ public class ProgramFrame extends JFrame{
 		date =ToolFunctions.getCurrentDate();
 		this.setTitle(date[0]+"."+date[1]+"."+date[2]);
 		mainPanel= new SchedulerPanel(this);		
-		setBounds(230, 100, 650, 400);
+		setBounds(230, 100, 850, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		add(mainPanel);
 		revalidate();
